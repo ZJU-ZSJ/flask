@@ -28,8 +28,13 @@ def login():
 
 @admin.route('/register', methods=['GET', 'POST'])
 def register():
+    register_key = 'zhucema'
     form = RegistrationForm()
     if form.validate_on_submit():
+        if form.registerkey.data != register_key:
+            flash(u'注册码不符，请返回重试')
+            return redirect(url_for('admin.register'))
+        else:
             if form.password.data != form.password2.data:
                 flash(u'两次输入密码不一')
                 return redirect(url_for('admin.register'))

@@ -13,4 +13,5 @@ class RegistrationForm(Form):
     password = PasswordField(
         u'密码', validators=[Required(), EqualTo('password2', message=u'两次密码不一致')])
     password2 = PasswordField(u'重复密码', validators=[Required()])
+    registerkey = StringField(u'注册码', validators=[Required()])
     submit = SubmitField(u'注册')
