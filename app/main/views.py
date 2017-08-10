@@ -9,7 +9,8 @@ from .. import db
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-	return render_template('main/index.html',  current_time=datetime.utcnow())
+	results = db.session.query(Record).order_by(-Record.id)
+	return render_template('main/index.html',  results=results,current_time=datetime.utcnow())
 
 @main.route('/user/comment', methods=['GET', 'POST'])
 def comment():

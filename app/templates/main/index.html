@@ -8,4 +8,20 @@
 	<h1>试试注册和登录吧</h1>
 	<h2>The local date is {{ moment(current_time).format('LL') }}.</h2>
 </div>
+<div calss="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>精品评论</th>
+        </tr>
+        </thead>
+        {% for result in results %}
+		{% if result.verify %}
+        <tbody>
+        <td>{{ result.comment }}</td>
+        </tbody>
+		{% endif %}
+        {% endfor %}
+    </table>
+</div>
 {% endblock %}

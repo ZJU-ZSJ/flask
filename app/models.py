@@ -31,6 +31,7 @@ class Record(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     create_time = db.Column(db.DATETIME)
     comment = db.Column(db.Text)
+    verify = db.Column(db.Boolean, default=False)
 
 @login_manager.user_loader
 def load_user(user_id):

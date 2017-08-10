@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_required, login_user, logout_user
 
-from app.admin.forms import LogForm, RegistrationForm
+from app.admin.forms import LogForm, RegistrationForm,ModifyForm,EditRecordForm
 from app.admin import admin
 from app import db
 from app.models import User, Record
@@ -69,4 +69,41 @@ def logout():
 @login_required
 def record():
     results = db.session.query(Record).order_by(-Record.id)
-    return render_template('admin/record.html', results=results,current_time=datetime.utcnow())
+    form = ModifyForm()
+    if form.validate_on_submit():
+        return redirect(url_for('admin.modify', id=form.id.data))
+    return render_template('admin/record.html', form=form,results=results,current_time=datetime.utcnow())
+
+@admin.route('/modify/<int:id>', methods=['GET', 'POST'])
+@login_required
+def modify(id):
+    re = db.session.query(Record).filter(Record.id == id).one()
+    form = EditRecordForm(comment=re.comment,verify=re.verify)
+    if form.validate_on_submit():
+        if form.delete.data == u"确认删除":
+            cord = Record.query.get_or_404(id)
+            try:
+                db.session.delete(cord)
+                db.session.commit()
+                return redirect(url_for('admin.record'))
+            except:
+                flash(u'删除失败，请联系管理员。')
+                return redirect(url_for('admin.modify', id=id))
+        elif form.delete.data == "":
+            cord = Record.query.get_or_404(id)
+            cord.comment = form.comment.data
+            if form.verify.data:
+                cord.verify = True
+            else:
+                cord.verify = False
+            try:
+                db.session.add(cord)
+                db.session.commit()
+                return redirect(url_for('admin.record'))
+            except:
+                flash(u'提交失败')
+                return redirect(url_for('admin.modify', id=id))
+        else:
+            flash(u'删除栏输入有误，请重新输入')
+            return redirect(url_for('admin.modify', id=id))
+    return render_template("admin/modify.html", form=form, id=re.id)
