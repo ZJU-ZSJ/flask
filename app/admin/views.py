@@ -83,7 +83,7 @@ def article():
                           user_id=current_user.id)
         db.session.add(acticle)
         flash(u'文章添加成功')
-        redirect(url_for('admin.index'))
+        redirect(url_for('main.index'))
     return render_template('admin/article.html', form=form, list=alist)
 
 @admin.route('/article/del', methods=['GET'])
@@ -107,7 +107,7 @@ def category():
         category = Category(name=form.name.data)
         db.session.add(category)
         flash(u'分类添加成功')
-        return redirect(url_for('admin.index'))
+        return redirect(url_for('main.index'))
     return render_template('admin/category.html', form=form, list=clist)
 
 @admin.route('/category/del', methods=['GET'])

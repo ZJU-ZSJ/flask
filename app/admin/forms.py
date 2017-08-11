@@ -29,12 +29,12 @@ class EditRecordForm(Form):
     submit = SubmitField(u'提交')
 
 class PostArticleForm(Form):
-    title = StringField(u'标题', validators=[Required(), length(6, 64)])
+    title = StringField(u'标题', validators=[Required(), length(1, 64)])
     body = TextAreaField(u'内容')
     category_id = QuerySelectField(u'分类', query_factory=lambda: Category.query.all(
     ), get_pk=lambda a: str(a.id), get_label=lambda a: a.name)
     submit = SubmitField(u'发布')
 
 class PostCategoryForm(Form):
-    name = StringField(u'分类名', validators=[Required(), length(6, 64)])
+    name = StringField(u'分类名', validators=[Required(), length(1, 64)])
     submit = SubmitField(u'发布')
