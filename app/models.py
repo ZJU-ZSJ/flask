@@ -1,7 +1,8 @@
 # -*- coding=utf-8 -*-
 from . import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash  # 引入密码加密 验证方法
-from flask.ext.login import LoginManager
+from flask_login import LoginManager
+from datetime import datetime
 from flask_login import UserMixin
 
 class User(UserMixin,db.Model):
@@ -9,6 +10,7 @@ class User(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
+    articles = db.relationship('Article', backref='user')
 
     @property
     def password(self):
@@ -32,6 +34,22 @@ class Record(db.Model):
     create_time = db.Column(db.DATETIME)
     comment = db.Column(db.Text)
     verify = db.Column(db.Boolean, default=False)
+
+class Article(db.Model):
+    __tablename__ = 'articles'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(64), unique=True)
+    body = db.Column(db.Text)
+    create_time = db.Column(db.DATETIME, default=datetime.utcnow())
+    category_id = db.Column(db.Integer, db.ForeignKey('categorys.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+class Category(db.Model):
+    __tablename__ = 'categorys'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    articles = db.relationship('Article', backref='category')
+
 
 @login_manager.user_loader
 def load_user(user_id):

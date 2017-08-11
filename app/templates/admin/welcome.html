@@ -4,9 +4,14 @@
 {% block title %}ZJU-ZSJ{% endblock %}
 
 {% block page_content %}
-<div class="page-header">
-	<h2>The local date is {{ moment(current_time).format('LL') }}.</h2>
-    <h1>Welcome</h1>
-</div>
-    <img alt="test" height="100%" width="100%" src="test.jpg"/>
+        <div class="span5 offsetHalf block">
+          <div class="pull-center">
+            <h1>Welcome!</h1>
+              <br>
+              <h2>登录成功，你现在可以点击下方按钮查看评论！</h2>
+              <br>
+            <h1><i class="icon-beaker icon-2x"></i></h1>
+            <p><a class="btn btn-primary btn-flat" href="{{ url_for('admin.record') }}" role="button">查看评论</a></p>
+          </div>
+      	</div>
 {% endblock %}

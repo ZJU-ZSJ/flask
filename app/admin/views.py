@@ -1,13 +1,12 @@
 # -*- coding=utf-8 -*-
 from datetime import datetime
 
-from flask import render_template, redirect, url_for, flash
-from flask_login import login_required, login_user, logout_user
-
-from app.admin.forms import LogForm, RegistrationForm,ModifyForm,EditRecordForm
+from flask import render_template, redirect, url_for, flash,request
+from flask_login import login_required, login_user, logout_user,current_user
+from app.admin.forms import PostCategoryForm,PostArticleForm,LogForm, RegistrationForm,ModifyForm,EditRecordForm
 from app.admin import admin
 from app import db
-from app.models import User, Record
+from app.models import User, Record, Article,Category
 
 
 @admin.route('/', methods=['GET', 'POST'])
@@ -73,6 +72,56 @@ def record():
     if form.validate_on_submit():
         return redirect(url_for('admin.modify', id=form.id.data))
     return render_template('admin/record.html', form=form,results=results,current_time=datetime.utcnow())
+
+@admin.route('/article', methods=['GET', 'POST'])
+@login_required
+def article():
+    form = PostArticleForm()
+    alist = Article.query.all()
+    if form.validate_on_submit():
+        acticle = Article(title=form.title.data, body=form.body.data, category_id=str(form.category_id.data.id),
+                          user_id=current_user.id)
+        db.session.add(acticle)
+        flash(u'文章添加成功')
+        redirect(url_for('admin.index'))
+    return render_template('admin/article.html', form=form, list=alist)
+
+@admin.route('/article/del', methods=['GET'])
+@login_required
+def article_del():
+    if request.args.get('id') is not None and request.args.get('a') == 'del':
+        x = Article.query.filter_by(id=request.args.get('id')).first()
+        if x is not None:
+            db.session.delete(x)
+            db.session.commit()
+            flash(u'已经删除' + x.title)
+            return redirect(url_for('admin.article'))
+        flash(u'请检查输入')
+        return redirect(url_for('admin.article'))
+
+@admin.route('/category', methods=['GET', 'POST'])
+def category():
+    clist = Category.query.all()
+    form = PostCategoryForm()
+    if form.validate_on_submit():
+        category = Category(name=form.name.data)
+        db.session.add(category)
+        flash(u'分类添加成功')
+        return redirect(url_for('admin.index'))
+    return render_template('admin/category.html', form=form, list=clist)
+
+@admin.route('/category/del', methods=['GET'])
+@login_required
+def category_del():
+    if request.args.get('id') is not None and request.args.get('a') == 'del':
+        x = Category.query.filter_by(id=request.args.get('id')).first()
+        if x is not None:
+            db.session.delete(x)
+            db.session.commit()
+            flash(u'已经删除' + x.name)
+            return redirect(url_for('admin.category'))
+        flash(u'请检查输入')
+        return redirect(url_for('admin.category'))
 
 @admin.route('/modify/<int:id>', methods=['GET', 'POST'])
 @login_required

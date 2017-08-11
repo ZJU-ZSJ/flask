@@ -4,24 +4,13 @@
 {% block title %}ZJU-ZSJ{% endblock %}
 
 {% block page_content %}
-<div class="page-header">
-	<h1>试试注册和登录吧</h1>
-	<h2>The local date is {{ moment(current_time).format('LL') }}.</h2>
-</div>
-<div calss="container">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>精品评论</th>
-        </tr>
-        </thead>
-        {% for result in results %}
-		{% if result.verify %}
-        <tbody>
-        <td>{{ result.comment }}</td>
-        </tbody>
-		{% endif %}
+    <div class="col-md-8">
+        {% for foo in list %}
+            <div class="act">
+                <h2><a href="{{ url_for('main.read' , id=foo.id) }}">{{ foo.title }}</a></h2>
+            </div>
         {% endfor %}
-    </table>
-</div>
+    </div>
 {% endblock %}
+
+
