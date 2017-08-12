@@ -2,24 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c4041de-6491-4733-bcea-e2e878ae0e18" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/admin/article_edit.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/admin/category_edit.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/static/jquery.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/739dea7c4efd_first_init_db.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/bb1c31191c59_first_init_db.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/migrations/versions/e29643b24447_first_init_db.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/__init__.py" afterPath="$PROJECT_DIR$/app/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/admin/forms.py" afterPath="$PROJECT_DIR$/app/admin/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/admin/views.py" afterPath="$PROJECT_DIR$/app/admin/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/forms.py" afterPath="$PROJECT_DIR$/app/main/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/main/views.py" afterPath="$PROJECT_DIR$/app/main/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models.py" afterPath="$PROJECT_DIR$/app/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/admin/article.html" afterPath="$PROJECT_DIR$/app/templates/admin/article.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/admin/category.html" afterPath="$PROJECT_DIR$/app/templates/admin/category.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/base.html" afterPath="$PROJECT_DIR$/app/templates/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/main/index.html" afterPath="$PROJECT_DIR$/app/templates/main/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/main/read.html" afterPath="$PROJECT_DIR$/app/templates/main/read.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.py" afterPath="$PROJECT_DIR$/config.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,7 +14,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/admin/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="360">
@@ -39,6 +22,16 @@
               <folding>
                 <element signature="e#23#52#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="22" column="67" lean-forward="false" selection-start-line="22" selection-start-column="67" selection-end-line="22" selection-end-column="67" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -98,16 +91,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="630">
               <caret line="40" column="60" lean-forward="false" selection-start-line="40" selection-start-column="60" selection-end-line="40" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="comment.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/main/comment.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" column="14" lean-forward="false" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -173,7 +156,6 @@
         <option value="$PROJECT_DIR$/app/templates/404.html" />
         <option value="$PROJECT_DIR$/app/templates/500.html" />
         <option value="$PROJECT_DIR$/app/templates/main/comment.html" />
-        <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/app/templates/admin/modify.html" />
         <option value="$PROJECT_DIR$/app/templates/base1.html" />
         <option value="$PROJECT_DIR$/static/style.css" />
@@ -203,6 +185,7 @@
         <option value="$PROJECT_DIR$/app/templates/admin/article.html" />
         <option value="$PROJECT_DIR$/app/templates/admin/category.html" />
         <option value="$PROJECT_DIR$/app/admin/views.py" />
+        <option value="$PROJECT_DIR$/config.py" />
       </list>
     </option>
   </component>
@@ -668,13 +651,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="27" column="1" lean-forward="false" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/static/jqury.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -849,6 +825,14 @@
           <folding>
             <element signature="e#23#52#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="22" column="67" lean-forward="false" selection-start-line="22" selection-start-column="67" selection-end-line="22" selection-end-column="67" />
+          <folding />
         </state>
       </provider>
     </entry>
