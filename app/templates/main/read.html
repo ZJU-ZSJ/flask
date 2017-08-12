@@ -2,10 +2,17 @@
 {% block page_content %}
     <div class="container">
         <div class="col-md-12">
-            <h2>{{ a.title }}</h2>
+            <h1>{{ a.title }}</h1>
             <hr>
             <p>{{ a.create_time }} | {{ a.category.name }}</p>
-            {{ a.body }}
         </div>
+
+    </div>
+    <div class="post-body">
+        {% if a.body_html %}
+            {{ a.body_html | safe }}
+        {% else %}
+            {{ a.body }}
+        {% endif %}
     </div>
 {% endblock %}

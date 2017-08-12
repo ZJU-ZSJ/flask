@@ -18,7 +18,7 @@
                 <tr>
                     <td>{{ foo.id }}</td>
                     <th>{{ foo.name }}</th>
-                    <td><a href="{{ url_for('admin.category_del',id=foo.id,a='del') }}">删除</a></td>
+                    <th><a class="btn btn-primary" href="{{ url_for('admin.category_edit', id=foo.id) }}" role="button">修改</a></th>
                 </tr>
             {% endfor %}
             </tbody>

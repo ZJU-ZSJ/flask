@@ -3,7 +3,7 @@ from datetime import datetime
 
 from flask import render_template, redirect, url_for, flash,request
 from flask_login import login_required, login_user, logout_user,current_user
-from app.admin.forms import PostCategoryForm,PostArticleForm,LogForm, RegistrationForm,ModifyForm,EditRecordForm
+from app.admin.forms import PostCategoryForm,PostArticleForm,LogForm, RegistrationForm,ModifyForm,EditRecordForm,EditArticleForm,EditCategoryForm
 from app.admin import admin
 from app import db
 from app.models import User, Record, Article,Category
@@ -86,18 +86,37 @@ def article():
         redirect(url_for('main.index'))
     return render_template('admin/article.html', form=form, list=alist)
 
-@admin.route('/article/del', methods=['GET'])
+@admin.route('/article/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
-def article_del():
-    if request.args.get('id') is not None and request.args.get('a') == 'del':
-        x = Article.query.filter_by(id=request.args.get('id')).first()
-        if x is not None:
-            db.session.delete(x)
-            db.session.commit()
-            flash(u'已经删除' + x.title)
-            return redirect(url_for('admin.article'))
-        flash(u'请检查输入')
-        return redirect(url_for('admin.article'))
+def article_edit(id):
+    ar = db.session.query(Article).filter(Article.id == id).one()
+    form = EditArticleForm(title=ar.title,body=ar.body,category_id=ar.category_id)
+    if form.validate_on_submit():
+        if form.delete.data == u"确认删除":
+            dar = Article.query.get_or_404(id)
+            try:
+                db.session.delete(dar)
+                db.session.commit()
+                return redirect(url_for('admin.article'))
+            except:
+                flash(u'删除失败，请联系管理员。')
+                return redirect(url_for('admin.article_edit', id=id))
+        elif form.delete.data == "":
+            dar = Article.query.get_or_404(id)
+            dar.title = form.title.data
+            dar.body = form.body.data
+            dar.category_id=str(form.category_id.data.id)
+            try:
+                db.session.add(dar)
+                db.session.commit()
+                return redirect(url_for('admin.article'))
+            except:
+                flash(u'提交失败')
+                return redirect(url_for('admin.article_edit', id=id))
+        else:
+            flash(u'删除栏输入有误，请重新输入')
+            return redirect(url_for('admin.article_edit', id=id))
+    return render_template("admin/article_edit.html", form=form, id=ar.id)
 
 @admin.route('/category', methods=['GET', 'POST'])
 def category():
@@ -110,18 +129,35 @@ def category():
         return redirect(url_for('main.index'))
     return render_template('admin/category.html', form=form, list=clist)
 
-@admin.route('/category/del', methods=['GET'])
+@admin.route('/category/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
-def category_del():
-    if request.args.get('id') is not None and request.args.get('a') == 'del':
-        x = Category.query.filter_by(id=request.args.get('id')).first()
-        if x is not None:
-            db.session.delete(x)
-            db.session.commit()
-            flash(u'已经删除' + x.name)
-            return redirect(url_for('admin.category'))
-        flash(u'请检查输入')
-        return redirect(url_for('admin.category'))
+def category_edit(id):
+    ca = db.session.query(Category).filter(Category.id == id).one()
+    form = EditCategoryForm(name=ca.name)
+    if form.validate_on_submit():
+        if form.delete.data == u"确认删除":
+            dca = Category.query.get_or_404(id)
+            try:
+                db.session.delete(dca)
+                db.session.commit()
+                return redirect(url_for('admin.category'))
+            except:
+                flash(u'删除失败，请联系管理员。')
+                return redirect(url_for('admin.category_edit', id=id))
+        elif form.delete.data == "":
+            dca = Category.query.get_or_404(id)
+            dca.name = form.name.data
+            try:
+                db.session.add(dca)
+                db.session.commit()
+                return redirect(url_for('admin.category'))
+            except:
+                flash(u'提交失败')
+                return redirect(url_for('admin.category_edit', id=id))
+        else:
+            flash(u'删除栏输入有误，请重新输入')
+            return redirect(url_for('admin.category_edit', id=id))
+    return render_template("admin/category_edit.html", form=form, id=ca.id)
 
 @admin.route('/modify/<int:id>', methods=['GET', 'POST'])
 @login_required

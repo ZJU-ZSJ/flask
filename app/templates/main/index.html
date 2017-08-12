@@ -4,23 +4,17 @@
 {% block title %}ZJU-ZSJ{% endblock %}
 
 {% block page_content %}
-<header class="masthead">
-  <div class="container">
-  <div class="row">
-    <div class="col-sm-6">
-      <h1><a href="#" title="scroll down for your viewing pleasure">ZJU-ZSJ</a><p class="lead">个人博客</p></h1>
-    </div>
-  </div>
-  </div>
-</header>
+
 
 <div class="col-md-8">
     {% for foo in list %}
     <div class="act">
-        <h2><a href="{{ url_for('main.read' , id=foo.id) }}">{{ foo.title }}</a></h2>
+        <h2><strong><a href="{{ url_for('main.read' , id=foo.id) }}">{{ foo.title }}</a></strong></h2>
+        <br>
     </div>
     {% endfor %}
 </div>
+
 {% endblock %}
 
 

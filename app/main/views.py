@@ -9,7 +9,7 @@ from .. import db
 
 @main.route('/')
 def index():
-    a = Article.query.all()
+    a = Article.query.order_by(Article.create_time.desc()).all()
     return render_template('main/index.html', list=a)
 
 @main.route('/read/', methods=['GET'])
