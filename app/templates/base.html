@@ -16,8 +16,9 @@ type="image/x-icon">
 {%endblock %}
 
 {% block content %}
-<!--body background="{{ url_for('static', filename='admin/back1.jpg') }} "  -->
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/city.css') }}">
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../static/jqurys.js"></script>
     <div class="container">
         {% for message in get_flashed_messages() %}
@@ -46,8 +47,6 @@ type="image/x-icon">
       </div>
       </div>
     </header>
-<script type="text/javascript" src="http://cdn.gbtags.com/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://cdn.gbtags.com/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <div id="nav">
         <nav class="navbar navbar-default navbar-static">
           <div class="container-fluid">
@@ -69,7 +68,7 @@ type="image/x-icon">
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">功能 <span class="caret"></span></a>
+                  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">功能 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="{{ url_for('admin.register') }}">注册 </a></li>
                         {% if current_user.is_authenticated %}
@@ -89,6 +88,5 @@ type="image/x-icon">
           </div><!-- /.container-fluid -->
         </nav>
     </div>
-
-
 {% endblock %}
+

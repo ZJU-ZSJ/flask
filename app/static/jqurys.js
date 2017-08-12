@@ -6,6 +6,8 @@ $('#nav').affix({
 
 $('#sidebar').affix({
       offset: {
-        top: 500
+        top: 400
       }
 });
+
+$('.dropdown-toggle').dropdown()
