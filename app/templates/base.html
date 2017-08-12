@@ -19,7 +19,7 @@ type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/city.css') }}">
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../static/jqurys.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='jqurys.js') }}"></script>
     <div class="container">
         {% for message in get_flashed_messages() %}
             <div class="alert alert-warning">
