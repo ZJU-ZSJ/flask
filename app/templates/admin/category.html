@@ -16,9 +16,9 @@
             <tbody>
             {% for foo in list %}
                 <tr>
-                    <td>{{ foo.id }}</td>
+                    <th>{{ foo.id }}</th>
                     <th>{{ foo.name }}</th>
-                    <th><a class="btn btn-primary" href="{{ url_for('admin.category_edit', id=foo.id) }}" role="button">修改</a></th>
+                    <th><a href="{{ url_for('admin.category_edit', id=foo.id) }}" class="button small">修改</a></th>
                 </tr>
             {% endfor %}
             </tbody>

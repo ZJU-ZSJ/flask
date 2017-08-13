@@ -8,7 +8,7 @@
 	<h2>The local date is {{ moment(current_time).format('LL') }}.</h2>
 </div>
 <div calss="container">
-    <table class="table" bgcolor="black">
+    <table class="table">
         <thead>
         <tr>
             <th>序号</th>
@@ -18,17 +18,17 @@
         </thead>
         {% for result in results %}
         <tbody>
-        <td>{{ result.id }}</td>
-        <td>{{ result.comment }}</td>
-        <td>{{ result.verify }}</td>
-        <td>
+        <th>{{ result.id }}</th>
+        <th>{{ result.comment }}</th>
+        <th>{{ result.verify }}</th>
+        <th>
             <form method="POST">
                 {{ form.hidden_tag() }}
                 {{ form.submit() }}
                 <div style="display:none">{{ form.id(value=result.id) }}</div>
                             <!-- 这里可能看不懂，我把返回id的文本框给隐藏了 -->
             </form>
-        </td>
+        </th>
         </tbody>
         {% endfor %}
     </table>

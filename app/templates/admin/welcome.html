@@ -4,14 +4,9 @@
 {% block title %}ZJU-ZSJ{% endblock %}
 
 {% block page_content %}
-        <div class="span5 offsetHalf block">
-          <div class="pull-center">
-            <h1>Welcome!</h1>
+            <h2>Welcome!</h2>
               <br>
               <h2>登录成功，你现在可以点击下方按钮查看和编辑文章！</h2>
               <br>
-            <h1><i class="icon-beaker icon-2x"></i></h1>
-            <p><a class="btn btn-primary btn-flat" href="{{ url_for('admin.article') }}" role="button">文章</a></p>
-          </div>
-      	</div>
+            <p><a href="{{ url_for('admin.article') }}" class="button special">文章</a></p>
 {% endblock %}

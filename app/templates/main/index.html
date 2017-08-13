@@ -3,18 +3,64 @@
 
 {% block title %}ZJU-ZSJ{% endblock %}
 
-{% block page_content %}
+
+{% block page %}
+<!--
+	Spectral by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+	<body class="landing">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Banner -->
+					<section id="banner">
+						<div class="inner">
+							<h2>ZJU-ZSJ</h2>
+							<p>个人博客<br />
+							<br />
+							</p>
+						</div>
+						<a href="#two" class="more scrolly">Learn More</a>
+					</section>
+
+				<!-- Two -->
+				<section id="two" class="wrapper alt style5">
+					{% for foo in list %}
+						<section class="spotlight">
+							<div class="content">
+								<h2><strong><a href="{{ url_for('main.read' , id=foo.id) }}">{{ foo.title }}</a></strong></h2>
+								<p>{{ foo.create_time }}</p>
+							</div>
+						</section>
+					{% endfor %}
+				</section>
 
 
-<div class="col-md-8">
-    {% for foo in list %}
-    <div class="act">
-        <h2><strong><a href="{{ url_for('main.read' , id=foo.id) }}">{{ foo.title }}</a></strong></h2>
-        <br>
-    </div>
-    {% endfor %}
-</div>
+
+
+
+				<!-- CTA -->
+					<section id="cta" class="wrapper style4">
+						<div class="inner">
+							<header>
+								<h2>Arcue ut vel commodo</h2>
+								<p>Aliquam ut ex ut augue consectetur interdum endrerit imperdiet amet eleifend fringilla.</p>
+							</header>
+							<ul class="actions vertical">
+								<li><a href="#" class="button fit special">Activate</a></li>
+								<li><a href="#" class="button fit">Learn More</a></li>
+							</ul>
+						</div>
+					</section>
+
+			</div>
 
 {% endblock %}
+
+
+
 
 

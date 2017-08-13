@@ -20,7 +20,7 @@ def read():
     flash(u'未找到相关文章')
     return redirect(url_for('main.index'))
 
-@main.route('/user/comment', methods=['GET', 'POST'])
+@main.route('/comment', methods=['GET', 'POST'])
 def comment():
     form = AddRecordForm()
     if form.validate_on_submit():
