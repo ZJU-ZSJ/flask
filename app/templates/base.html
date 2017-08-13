@@ -16,10 +16,18 @@ type="image/x-icon">
 {%endblock %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/city.css') }}">
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='jqurys.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/citys.css') }}">
+<header class="masthead">
+      <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+            <br>
+            <br>
+          <h1><a href="{{ url_for('main.index') }}" title="scroll down for your viewing pleasure">ZJU-ZSJ</a><p class="lead">个人博客</p></h1>
+        </div>
+      </div>
+      </div>
+</header>
     <div class="container">
         {% for message in get_flashed_messages() %}
             <div class="alert alert-warning">
@@ -38,17 +46,8 @@ type="image/x-icon">
 
 
 {% block navbar %}
-    <header class="masthead">
-      <div class="container">
-      <div class="row">
-        <div class="col-sm-6">
-          <h1><a href="#" title="scroll down for your viewing pleasure">ZJU-ZSJ</a><p class="lead">个人博客</p></h1>
-        </div>
-      </div>
-      </div>
-    </header>
     <div id="nav">
-        <nav class="navbar navbar-default navbar-static">
+        <nav class="navbar navbar-default navbar-static navbar-fixed-top">
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
