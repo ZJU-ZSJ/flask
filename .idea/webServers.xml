@@ -3,11 +3,11 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="bea5062d-2329-4877-9e86-4b142d41881a" name="zsj" url="http://123.206.125.46">
-        <fileTransfer host="123.206.125.46" port="22" accessType="SFTP">
+        <fileTransfer host="123.206.125.46" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
-          <option name="port" value="22" />
+          <option name="port" value="21" />
         </fileTransfer>
       </webServer>
     </option>
