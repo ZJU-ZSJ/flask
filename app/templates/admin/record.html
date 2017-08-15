@@ -14,6 +14,7 @@
             <th>序号</th>
             <th>评论</th>
             <th>是否加精</th>
+            <th>创建时间</th>>
         </tr>
         </thead>
         {% for result in results %}
@@ -21,6 +22,7 @@
         <th>{{ result.id }}</th>
         <th>{{ result.comment }}</th>
         <th>{{ result.verify }}</th>
+        <th>{{ result.create_time }}</th>
         <th>
             <form method="POST">
                 {{ form.hidden_tag() }}

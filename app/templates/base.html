@@ -11,7 +11,7 @@
 			<title>ZJU-ZSJ</title>
 			<meta charset="utf-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1" />
-			<!--[if lte IE 8]><script type="text/javascript" src="{{ url_for('static', filename='assets/js/html5shiv.js') }}"></script><![endif]-->
+			<!--[if lte IE 8]><script type="text/javascript" src="{{ url_for('static', filename='assets/js/ie/html5shiv.js') }}"></script><![endif]-->
 			<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
 			<!--[if lte IE 8]><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/ie8.css') }}" /><![endif]-->
 			<!--[if lte IE 9]><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/ie9.css') }}" /><![endif]-->
@@ -22,12 +22,6 @@
 	{% block content %}
 	{% block page %}
 	<div class="container">
-		{% for message in get_flashed_messages() %}
-		<div class="alert alert-warning">
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			{{ message }}
-		</div>
-		{% endfor %}
 		<article id="main">
 			<header>
 				<h2>ZJU-ZSJ</h2>
@@ -35,6 +29,11 @@
 			</header>
 			<section class="wrapper style5">
 				<div class="inner">
+					{% for message in get_flashed_messages() %}
+					 <div class="alert alert-warning">
+						 <blockquote>{{ message }}</blockquote>
+					 </div>
+					{% endfor %}
 					{% block page_content %}
 					{% endblock %}
 				</div>
@@ -92,5 +91,6 @@
 			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 			{{ pagedown.include_pagedown() }}
 			{{ moment.include_moment() }}
+
 
 	{% endblock %}

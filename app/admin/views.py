@@ -61,7 +61,6 @@ def welcome():
 @login_required
 def logout():
     logout_user()
-    flash(u'您已经登出了系统')
     return redirect(url_for('main.index'))
 
 @admin.route('/record', methods=['GET', 'POST'])
@@ -71,20 +70,21 @@ def record():
     form = ModifyForm()
     if form.validate_on_submit():
         return redirect(url_for('admin.modify', id=form.id.data))
-    return render_template('admin/record.html', form=form,results=results,current_time=datetime.utcnow())
+    return render_template('admin/record.html', form=form,results=results,current_time=datetime.now())
 
 @admin.route('/article', methods=['GET', 'POST'])
 @login_required
 def article():
     form = PostArticleForm()
-    alist = Article.query.all()
+    alist = Article.query.order_by(Article.create_time.desc()).all()
     if form.validate_on_submit():
         acticle = Article(title=form.title.data, body=form.body.data, category_id=str(form.category_id.data.id),
-                          user_id=current_user.id)
+                          user_id=current_user.id,create_time=datetime.now())
         db.session.add(acticle)
         flash(u'文章添加成功')
-        redirect(url_for('main.index'))
-    return render_template('admin/article.html', form=form, list=alist)
+        acticle1 = db.session.query(Article).filter(Article.title == form.title.data).one()
+        return redirect(url_for('main.read',id=acticle1.id))
+    return render_template('admin/article.html', form=form,list=alist)
 
 @admin.route('/article/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -126,7 +126,7 @@ def category():
         category = Category(name=form.name.data)
         db.session.add(category)
         flash(u'分类添加成功')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('admin.category'))
     return render_template('admin/category.html', form=form, list=clist)
 
 @admin.route('/category/edit/<int:id>', methods=['GET', 'POST'])

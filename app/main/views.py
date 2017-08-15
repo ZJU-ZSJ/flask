@@ -17,7 +17,6 @@ def read():
     a = Article.query.filter_by(id=request.args.get('id')).first()
     if a is not None:
         return render_template('main/read.html', a=a)
-    flash(u'未找到相关文章')
     return redirect(url_for('main.index'))
 
 @main.route('/comment', methods=['GET', 'POST'])
@@ -32,7 +31,7 @@ def comment():
                 db.session.commit()
                 flash(u'评论提交成功')
                 i = 0
-                return redirect(url_for('main'))
+                return redirect(url_for('main.comment'))
             except:
                 db.session.rollback()
     return render_template('main/comment.html', form=form)

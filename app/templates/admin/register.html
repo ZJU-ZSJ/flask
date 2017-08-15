@@ -5,7 +5,7 @@
 
 {% block page_content %}
 <div class="page-header">
-	<h2>The local date is {{ moment(current_time).format('LL') }}.</h2>
+	<h2>The local date is {{ moment(current_time).format('LLL') }}.</h2>
 </div>
 {{ wtf.quick_form(form) }}
 {% endblock %}
