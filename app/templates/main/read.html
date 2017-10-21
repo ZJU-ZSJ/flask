@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% block page_content %}
 <div class="page-header">
-    <h2>{{ a.title }}</h2>
+    <strong style="font-size: 50px">{{ a.title }}</strong>
             <hr>
             <p>{{ a.create_time }} | {{ a.category.name }}</p>
+    <br/>
         {% if a.body_html %}
             {{ a.body_html | safe }}
         {% else %}

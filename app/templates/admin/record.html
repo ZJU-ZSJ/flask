@@ -20,7 +20,11 @@
         {% for result in results %}
         <tbody>
         <th>{{ result.id }}</th>
+        {% if result.comment_html %}
+        <th>{{ result.comment_html | safe }}</th>
+        {% else %}
         <th>{{ result.comment }}</th>
+        {% endif %}
         <th>{{ result.verify }}</th>
         <th>{{ result.create_time }}</th>
         <th>

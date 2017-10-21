@@ -35,3 +35,7 @@ def comment():
             except:
                 db.session.rollback()
     return render_template('main/comment.html', form=form)
+
+@main.route('/google04e9c053081c788b.html')
+def google():
+    return render_template('main/google04e9c053081c788b.html')

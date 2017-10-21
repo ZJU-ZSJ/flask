@@ -7,5 +7,5 @@ from flask_pagedown.fields import PageDownField
 
 class AddRecordForm(FlaskForm):
 
-    comment = PageDownField(u'* 填写你的评论:', validators=[Required(),length(1, 64)])
+    comment = PageDownField(u'* 填写你的评论:', validators=[Required()])
     submit = SubmitField(u'提交')

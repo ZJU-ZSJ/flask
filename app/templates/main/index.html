@@ -4,30 +4,7 @@
 {% block title %}ZJU-ZSJ{% endblock %}
 
 
-{% block page %}
-<!--
-	Spectral by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-	<body class="landing">
-
-		<!-- Page Wrapper -->
-			<div id="page-wrapper">
-
-				<!-- Banner -->
-					<section id="banner">
-						<div class="inner">
-							<h2>ZJU-ZSJ</h2>
-							<p>个人博客<br />
-							<br />
-							</p>
-						</div>
-						<a href="#two" class="more scrolly">Learn More</a>
-					</section>
-
-				<!-- Two -->
-				<section id="two" class="wrapper alt style5">
+{% block page_content %}
 					{% for foo in list %}
 						<section class="spotlight">
 							<div class="content">
@@ -36,27 +13,6 @@
 							</div>
 						</section>
 					{% endfor %}
-				</section>
-
-
-
-
-
-				<!-- CTA -->
-					<section id="cta" class="wrapper style4">
-						<div class="inner">
-							<header>
-								<h2>Arcue ut vel commodo</h2>
-								<p>Aliquam ut ex ut augue consectetur interdum endrerit imperdiet amet eleifend fringilla.</p>
-							</header>
-							<ul class="actions vertical">
-								<li><a href="#" class="button fit special">Activate</a></li>
-								<li><a href="#" class="button fit">Learn More</a></li>
-							</ul>
-						</div>
-					</section>
-
-			</div>
 
 {% endblock %}
 

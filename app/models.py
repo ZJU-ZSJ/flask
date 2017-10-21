@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from datetime import datetime
 from flask_login import UserMixin
 import hashlib
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 
 class User(UserMixin,db.Model):
@@ -30,12 +31,29 @@ class User(UserMixin,db.Model):
         return check_password_hash(self.password_hash, password)
         # 在登入时,我们需要验证明文密码是否和加密密码所吻合
 
+
+
 class Record(db.Model):
     __tablename__ = 'record'
     id = db.Column(db.Integer, primary_key=True)
     create_time = db.Column(db.DATETIME)
     comment = db.Column(db.Text)
+    comment_html = db.Column(db.Text)
     verify = db.Column(db.Boolean, default=False)
+
+    @staticmethod
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p','img']
+        attrs = {
+            'img': ['src', 'alt']
+        }
+        target.comment_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True, attributes=attrs))
+
+db.event.listen(Record.comment, 'set', Record.on_changed_body)
 
 
 from markdown import markdown
