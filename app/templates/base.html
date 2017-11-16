@@ -2,6 +2,7 @@
 {% block title %}ZJU-ZSJ{% endblock %}
 
 {% block head %}
+<meta name="baidu_union_verify" content="ebe8ca5468cdfb748c3394aff294445e">
 {{ super() }}
 {{ pagedown.include_pagedown() }}
 {{ moment.include_moment() }}
@@ -14,8 +15,8 @@
         body {
             padding-top: 70px;
         }
-	</style>
 
+	</style>
 {% endblock %}
 
 
@@ -46,6 +47,7 @@
 					  {% endif %}
 					  <li><a href="http://www.google.com">Google</a></li>
 					  <li><a href="http://www.youtube.com">YouTube</a></li>
+                      <li><a href="http://rainymood.com/">RainyMood</a></li>
 					<li role="separator" class="divider"></li>
 					  {% if current_user.is_authenticated %}
                       <li><a href="{{ url_for('admin.logout') }}">用户登出</a></li>

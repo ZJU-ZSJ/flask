@@ -5,14 +5,28 @@
 
 
 {% block page_content %}
+<div class="col-md-8 ">
+	<div class="well well-lg">
 					{% for foo in list %}
 						<section class="spotlight">
 							<div class="content">
 								<h2><strong><a href="{{ url_for('main.read' , id=foo.id) }}">{{ foo.title }}</a></strong></h2>
-								<p>{{ foo.create_time }}</p>
+								<div class="text-right">
+									<span class="label label-primary">
+									{{ foo.comments.count() }} Comments
+									</span>
+									<p>{{ foo.create_time }}</p>
+								</div>
 							</div>
 						</section>
+						<hr>
 					{% endfor %}
+	</div>
+</div>
+
+<div class="col-md-4">
+	<a href="https://www.vultr.com/?ref=7111450"><img src="https://www.vultr.com/media/banner_3.png" width="300" height="250"></a>
+</div>
 
 {% endblock %}
 

@@ -68,6 +68,8 @@ class Article(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('categorys.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    comments = db.relationship('Comment', backref='articles', lazy='dynamic')
+
     @staticmethod
     def on_changed_body(target, value, oldvalue, initiator):
         allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
@@ -87,6 +89,26 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     articles = db.relationship('Article', backref='category')
+
+class Comment(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text)
+    body_html = db.Column(db.Text)
+    create_time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    name = db.Column(db.String(64))
+    email = db.Column(db.String(64))
+    post_id = db.Column(db.Integer, db.ForeignKey('articles.id'))
+
+    @staticmethod
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'code', 'em', 'i',
+        'strong']
+        target.body_html = bleach.linkify(bleach.clean(
+        markdown(value, output_format='html'),
+        tags=allowed_tags, strip=True))
+
+db.event.listen(Comment.body, 'set', Comment.on_changed_body)
 
 
 
