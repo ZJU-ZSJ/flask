@@ -1,13 +1,41 @@
 # -*- coding=utf-8 -*-
 from datetime import datetime
 
-from flask import render_template, redirect, url_for, flash,request
+from flask import render_template, redirect, url_for, flash,request,session
 from flask_login import login_required, login_user, logout_user,current_user
-from app.admin.forms import PostCategoryForm,PostArticleForm,LogForm, RegistrationForm,ModifyForm,EditRecordForm,EditArticleForm,EditCategoryForm
+from app.admin.forms import EditC5gameForm,C5gameForm,PostCategoryForm,PostArticleForm,LogForm, RegistrationForm,ModifyForm,EditRecordForm,EditArticleForm,EditCategoryForm
 from app.admin import admin
-from app import db
-from app.models import User, Record, Article,Category
+from app import db,mail
+from app.models import User, Record, Article,Category,Comment,C5game
+import requests
+import json
+import re
+from flask_mail import Mail, Message
 
+
+def get_price(id):
+    headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/62.0.3202.89 Chrome/62.0.3202.89 Safari/537.36",
+        "X-Requested-With": "XMLHttpRequest"}
+    resp = requests.get(
+        "https://www.c5game.com/api/product/sale.json?id="+id+"&quick=&gem_id=0&page=1&flag=&callback=jQuery",
+        headers=headers)
+    # print resp.text
+    temp = re.findall('\"price\":(.*?)\,', resp.text)
+    return temp[0]
+
+def flushprice():
+    print "flush success"
+    c5list = db.session.query(C5game).all()
+    print "c5"
+    for item in c5list:
+        if(item.verify == True):
+            price = get_price(str(item.id))
+            print u"成功得到价格"
+            item.price = price
+            if (float(price) < float(item.min)):
+                send_mail(item.name, item.price, item.min, item.address)
+                item.verify = False
 
 @admin.route('/', methods=['GET', 'POST'])
 def index():
@@ -129,6 +157,17 @@ def category():
         return redirect(url_for('admin.category'))
     return render_template('admin/category.html', form=form, list=clist)
 
+@admin.route('/comment_del/<int:id>', methods=['GET', 'POST'])
+@login_required
+def comment_del(id):
+    comment = db.session.query(Comment).filter(Comment.id == id).one()
+    try:
+        db.session.delete(comment)
+        db.session.commit()
+    except:
+        flash(u'删除失败，请联系管理员。')
+    return redirect(url_for('main.read', id=session['article_id']))
+
 @admin.route('/category/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def category_edit(id):
@@ -192,3 +231,63 @@ def modify(id):
             flash(u'删除栏输入有误，请重新输入')
             return redirect(url_for('admin.modify', id=id))
     return render_template("admin/modify.html", form=form, id=re.id)
+
+@admin.route('/c5game', methods=['GET', 'POST'])
+@login_required
+def c5game():
+    print 1
+    c5list = db.session.query(C5game).all()
+    flushprice()
+    form = C5gameForm()
+    if form.validate_on_submit():
+        c5game = C5game(id = form.id.data,name = form.name.data,min = form.min.data,price = form.price.data,address = form.address.data)
+        db.session.add(c5game)
+        flash(u'添加成功')
+        return redirect(url_for('admin.c5game'))
+    return render_template('admin/c5game.html', form=form, list=c5list)
+
+@admin.route('/c5game/change/<int:id>', methods=['GET', 'POST'])
+@login_required
+def c5game_change(id):
+    c5 = db.session.query(C5game).filter(C5game.id == id).one()
+    form = EditC5gameForm(min=c5.min,verify = c5.verify)
+    if form.validate_on_submit():
+        if form.delete.data == u"确认删除":
+            cord = C5game.query.get_or_404(id)
+            try:
+                db.session.delete(cord)
+                db.session.commit()
+                return redirect(url_for('admin.c5game'))
+            except:
+                flash(u'删除失败，请联系管理员。')
+                return redirect(url_for('admin.c5game_change', id=id))
+        elif form.delete.data == "":
+            cord = C5game.query.get_or_404(id)
+            cord.min = form.min.data
+            if form.verify.data:
+                cord.verify = True
+            else:
+                cord.verify = False
+            try:
+                db.session.add(cord)
+                db.session.commit()
+                return redirect(url_for('admin.c5game'))
+            except:
+                flash(u'提交失败')
+                return redirect(url_for('admin.c5game_change', id=id))
+        else:
+            flash(u'删除栏输入有误，请重新输入')
+            return redirect(url_for('admin.c5game_change', id=id))
+    return render_template("admin/changec5.html", form=form, id=c5.id,info = c5)
+
+
+
+def send_mail(name,price,min,address):
+    msg = Message(u"有饰品低于您的价格区间了：{0}".format(name), recipients=['616626829@qq.com'])
+    msg.html = u"<h1>有饰品低于您的价格区间了</h1>" \
+               u"<p>名称：{0}</p>" \
+               u"<p>当前价格:{1}</p>" \
+               u"<p>预设价格：{2}</p>" \
+               u"<a href{3}>前往购买</a>" .format(name,price,min,address)
+
+    mail.send(msg)

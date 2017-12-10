@@ -16,6 +16,18 @@
             padding-top: 70px;
         }
 
+        .headofread {
+            height: 200px;
+            background-color: whitesmoke;
+        }
+        .center-block {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
 	</style>
 {% endblock %}
 
@@ -38,12 +50,13 @@
 			</ul>
             <ul class="nav navbar-nav navbar-right">
     			<li class="dropdown">
-				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>Menu <span class="caret"></span></a>
 				  <ul class="dropdown-menu">
 					  {% if current_user.is_authenticated %}
 					  	<li><a href="{{ url_for('admin.article') }}">文章</a></li>
 					  	<li><a href="{{ url_for('admin.category') }}">目录</a></li>
                       <li><a href="{{ url_for('admin.record') }}">查看评论</a></li>
+                      <li><a href="{{ url_for('admin.c5game') }}">C5game</a></li>
 					  {% endif %}
 					  <li><a href="http://www.google.com">Google</a></li>
 					  <li><a href="http://www.youtube.com">YouTube</a></li>
@@ -77,7 +90,8 @@
         <ul class="list-inline text-center">
             <hr />
             <a href="//www.zjuzsj.cn/" >ZJU-ZSJ</a></strong>|
-                互联网ICP备案：浙ICP备17044750号-1</li>
+                互联网ICP备案：浙ICP备17044750号-1</li><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1270201931'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1270201931%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+            <p>本网站GitHub地址：https://github.com/ZJU-ZSJ/flask.git</p>
         </ul>
     </div>
 {% endblock %}

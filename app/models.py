@@ -6,6 +6,7 @@ from datetime import datetime
 from flask_login import UserMixin
 import hashlib
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from sqlalchemy import Float
 
 
 class User(UserMixin,db.Model):
@@ -47,7 +48,8 @@ class Record(db.Model):
                         'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
                         'h1', 'h2', 'h3', 'p','img']
         attrs = {
-            'img': ['src', 'alt']
+            'img': ['src', 'alt'],
+            'a': ['href','rel']
         }
         target.comment_html = bleach.linkify(bleach.clean(
             markdown(value, output_format='html'),
@@ -88,7 +90,16 @@ class Category(db.Model):
     __tablename__ = 'categorys'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-    articles = db.relationship('Article', backref='category')
+    articles = db.relationship('Article', backref='category',lazy='dynamic')
+
+class C5game(db.Model):
+    __tablename__ = 'c5game'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    address = db.Column(db.String(64), unique=True)
+    price = db.Column(db.Float)
+    min = db.Column(db.Float)
+    verify = db.Column(db.Boolean, default=True)
 
 class Comment(db.Model):
     __tablename__ = 'comments'

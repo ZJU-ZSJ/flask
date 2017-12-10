@@ -11,7 +11,7 @@ class AddRecordForm(FlaskForm):
     submit = SubmitField(u'提交')
 
 class CommentForm(FlaskForm):
-    body = StringField(u'填写你的评论',validators = [Required()])
+    body = TextAreaField(u'填写你的评论',validators = [Required()],render_kw={"style":"height:200px"})
     email = StringField(u'你的邮箱',validators = [Required()])
     name = StringField(u'昵称',validators = [Required()])
     submit = SubmitField(u'提交')

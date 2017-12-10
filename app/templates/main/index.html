@@ -5,6 +5,10 @@
 
 
 {% block page_content %}
+<div class="headofread hidden-xs">
+    <img src="{{ url_for('static', filename='logo.jpg') }}" alt="..." class="img-circle center-block" height="200px" width="200px">
+</div>
+<br><br>
 <div class="col-md-8 ">
 	<div class="well well-lg">
 					{% for foo in list %}
@@ -15,7 +19,7 @@
 									<span class="label label-primary">
 									{{ foo.comments.count() }} Comments
 									</span>
-									<p>{{ foo.create_time }}</p>
+									<p>{{ foo.create_time }}|{{ foo.category.name }}</p>
 								</div>
 							</div>
 						</section>
@@ -25,9 +29,26 @@
 </div>
 
 <div class="col-md-4">
-	<a href="https://www.vultr.com/?ref=7111450"><img src="https://www.vultr.com/media/banner_3.png" width="300" height="250"></a>
-</div>
+	<audio controls>
+		<source src="http://www.170mv.com/kw/other.web.nf01.sycdn.kuwo.cn/resource/n1/64/16/1510364410.mp3" type="audio/mpeg">
+	</audio>
 
+
+	<div class="well well-lg">
+		<div class="panel panel-default">
+		  <div class="panel-heading">分类</div>
+					<ul class="list-group">
+						{% for cate in category %}
+						  <a href="{{ url_for('main.category' , id=cate.id) }}" class="list-group-item">
+							<span class="badge">
+								{{ cate.articles.count() }}
+							</span>{{ cate.name }}
+						  </a>
+						{% endfor %}
+					</ul>
+		</div>
+	</div>
+</div>
 {% endblock %}
 
 
